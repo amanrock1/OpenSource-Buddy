@@ -6,7 +6,7 @@
   <title>OpenSource Buddy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&family=JetBrains+Mono:wght@400..700&display=swap">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -30,13 +30,21 @@
   </header>
 
   <section class="intro wrap">
-    <h1>Turn any GitHub issue into your first pull request.</h1>
-    <p>Paste an issue and get a plain-English explanation, the skills it needs, and a checklist to follow from fork to PR.</p>
-    <ol class="how" aria-label="How it works">
-      <li><b>Paste</b> the title and description</li>
-      <li><b>Analyze</b> with AI or demo mode</li>
-      <li><b>Follow</b> the checklist</li>
-    </ol>
+    <div class="intro-text">
+      <p class="prompt" aria-hidden="true"><span class="ps">$</span> <span id="typed"></span><span class="caret"></span></p>
+      <h1>Turn any GitHub issue into your first pull request.</h1>
+      <p class="lead">Paste an issue and get a plain-English explanation, the skills it needs, and a checklist to follow from fork to PR.</p>
+      <ol class="how" aria-label="How it works">
+        <li><b>Paste</b> the title and description</li>
+        <li><b>Analyze</b> with AI or demo mode</li>
+        <li><b>Follow</b> the checklist</li>
+      </ol>
+    </div>
+    <div class="heat" aria-hidden="true">
+      <div class="heat-head"><span class="dots"></span><span>next-contribution.graph</span></div>
+      <div id="heat-grid" class="heat-grid"></div>
+      <div class="heat-legend">Less <i class="c l0"></i><i class="c l1"></i><i class="c l2"></i><i class="c l3"></i><i class="c l4"></i> More</div>
+    </div>
   </section>
 
   <main class="layout wrap">

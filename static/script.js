@@ -222,7 +222,8 @@ async function onSubmit(ev) {
   const box = $("results");
   box.hidden = false;
   box.replaceChildren(el("div", { class: "card loading" }, el("div", { class: "spinner" }),
-    el("span", { text: v.mode === "auto" ? "Analyzing… the AI model can take a minute." : "Preparing demo guidance…" })));
+    el("span", { text: v.mode === "auto" ? "Analyzing… the AI model can take a minute." : "Preparing demo guidance…" }),
+    el("div", { class: "scan", "aria-hidden": "true" })));
   try {
     const resp = await fetch("/api/analyze", { method: "POST",
       headers: { "Content-Type": "application/json" }, body: JSON.stringify(v) });
@@ -247,7 +248,59 @@ function clearForm() {
   $("results").hidden = true;
 }
 
+// ---------------------------------------------------- hero animations ---
+const reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+function initHeat() {
+  const grid = $("heat-grid");
+  if (!grid) return;
+  const COLS = 20, ROWS = 7;
+  const cells = [];
+  for (let i = 0; i < COLS * ROWS; i++) {
+    const c = el("i", { class: "c" });
+    grid.append(c);
+    cells.push(c);
+  }
+  const setLevel = (c, n) => { c.className = n ? `c l${n}` : "c"; };
+  // Denser toward the right, like a growing contribution history.
+  cells.forEach((c, i) => {
+    const col = Math.floor(i / ROWS) / COLS;
+    if (Math.random() < 0.25 + col * 0.5) setLevel(c, 1 + Math.floor(Math.random() * 4));
+  });
+  if (reduceMotion) return;
+  setInterval(() => {
+    for (let k = 0; k < 3; k++) {
+      const c = cells[Math.floor(Math.random() * cells.length)];
+      setLevel(c, Math.random() < 0.3 ? 0 : 1 + Math.floor(Math.random() * 4));
+    }
+  }, 220);
+}
+
+function initTyping() {
+  const out = $("typed");
+  if (!out) return;
+  const lines = [
+    'buddy analyze "Navigation menu does not open on mobile"',
+    'buddy analyze "App crashes when submitting an empty form"',
+    'buddy analyze "calculate_discount() accepts negative percentages"',
+  ];
+  if (reduceMotion) { out.textContent = lines[0]; return; }
+  let i = 0, n = 0, dir = 1;
+  const tick = () => {
+    const line = lines[i];
+    n += dir;
+    out.textContent = line.slice(0, n);
+    let wait = dir === 1 ? 45 : 18;
+    if (dir === 1 && n === line.length) { dir = -1; wait = 1800; }
+    else if (dir === -1 && n === 0) { dir = 1; i = (i + 1) % lines.length; wait = 400; }
+    setTimeout(tick, wait);
+  };
+  tick();
+}
+
 async function init() {
+  initHeat();
+  initTyping();
   $("issue-form").addEventListener("submit", onSubmit);
   $("clear-btn").addEventListener("click", clearForm);
   $("description").addEventListener("input", updateCount);
