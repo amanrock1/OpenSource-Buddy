@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenSource Buddy</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <h1>OpenSource Buddy</h1>
+      <p>Paste a GitHub issue and get a beginner-friendly explanation, the skills involved, and a step-by-step plan for your first contribution.</p>
+      <ul class="chips"><li>Explain</li><li>Plan</li><li>Save</li></ul>
+      <p id="engine-status" class="status" role="status">Checking AI engine…</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <ol class="how" aria-label="How it works">
+      <li><b>Paste</b> an issue’s title and description</li>
+      <li><b>Analyze</b> it with AI or demo mode</li>
+      <li><b>Contribute</b> by following the roadmap</li>
+    </ol>
+    <section class="card" aria-labelledby="form-h">
+      <h2 id="form-h">Analyze an issue</h2>
+      <div class="samples">
+        <span>Try an example:</span>
+        <span id="sample-buttons"></span>
+      </div>
+      <form id="issue-form" novalidate>
+        <label for="title">Issue title <span class="req">(required)</span></label>
+        <input id="title" name="title" type="text" maxlength="200" autocomplete="off">
+
+        <label for="description">Issue description <span class="req">(required)</span></label>
+        <textarea id="description" name="description" rows="8" maxlength="8000"></textarea>
+        <span id="desc-count" class="count" aria-hidden="true">0 / 8000</span>
+
+        <label for="url">GitHub issue URL <span class="opt">(optional, not fetched)</span></label>
+        <input id="url" name="url" type="url" placeholder="https://github.com/owner/repo/issues/123" autocomplete="off">
+
+        <label class="check">
+          <input id="demo-only" type="checkbox"> Use demo mode only (skip AI)
+        </label>
+
+        <p id="form-error" class="error" role="alert" hidden></p>
+        <div class="actions">
+          <button id="analyze-btn" type="submit" class="primary">Analyze Issue</button>
+          <button id="clear-btn" type="button" class="secondary">Clear</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="results" aria-live="polite" hidden></section>
+
+    <section class="card" aria-labelledby="saved-h">
+      <h2 id="saved-h">Saved issues</h2>
+      <p id="saved-empty" class="muted">Nothing saved yet. Analyze an issue and press “Save”.</p>
+      <ul id="saved-list" class="saved"></ul>
+    </section>
+  </main>
+
+  <footer class="wrap muted">
+    <p>MIT licensed. Suggestions are generated guidance, not verified facts about any repository.</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
