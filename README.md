@@ -180,7 +180,7 @@ The app does not download models and needs no API keys. Model output is validate
 
 ![OpenSource Buddy main page](1.png)
 
-**AI analysis result**: explanation, skills, difficulty estimate and a numbered roadmap, with generated content clearly separated from your input.
+**Analysis result** (demo mode shown): explanation, skills, difficulty estimate and a checkbox roadmap, with generated content clearly separated from your input.
 
 ![OpenSource Buddy analysis result](2.png)
 

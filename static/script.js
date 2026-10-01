@@ -88,8 +88,10 @@ function listPanel(title, items, ordered, cls = "") {
   return el("div", { class: cls === "wide" ? "panel wide" : "panel" },
     el("span", { class: "tag", text: "Generated suggestion" }),
     el("h3", { text: title }),
-    el(ordered ? "ol" : "ul", { class: ordered ? "timeline" : cls === "pills" ? "pills" : "" },
-      ...items.map((t) => el("li", { text: t }))));
+    el(ordered ? "ol" : "ul", { class: ordered ? "tasks" : cls === "pills" ? "pills" : "" },
+      ...items.map((t) => ordered
+        ? el("li", {}, el("label", { class: "step" }, el("input", { type: "checkbox" }), el("span", { text: t })))
+        : el("li", { text: t }))));
 }
 
 function showResult(res) {
@@ -245,10 +247,12 @@ async function init() {
   const status = $("engine-status");
   try {
     const s = await (await fetch("/api/status")).json();
+    status.dataset.state = s.ollama_available ? "ok" : "off";
     status.textContent = s.ollama_available
       ? `AI engine: ${s.message}`
       : `AI engine offline. Demo mode will be used. (${s.message})`;
   } catch (e) {
+    status.dataset.state = "off";
     status.textContent = "Could not check AI engine status.";
   }
 }

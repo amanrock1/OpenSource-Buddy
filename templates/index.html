@@ -4,26 +4,28 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>OpenSource Buddy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <header class="hero">
     <div class="wrap">
       <h1>OpenSource Buddy</h1>
-      <p>Paste a GitHub issue and get a beginner-friendly explanation, the skills involved, and a step-by-step plan for your first contribution.</p>
-      <ul class="chips"><li>Explain</li><li>Plan</li><li>Save</li></ul>
-      <p id="engine-status" class="status" role="status">Checking AI engine…</p>
+      <p>Paste a GitHub issue. Get a plain-English explanation, the skills involved, and a step-by-step plan for your first pull request.</p>
+      <p id="engine-status" class="status" role="status" data-state="">Checking AI engine…</p>
     </div>
   </header>
 
   <main class="wrap">
     <ol class="how" aria-label="How it works">
-      <li><b>Paste</b> an issue’s title and description</li>
+      <li><b>Paste</b> the issue’s title and description</li>
       <li><b>Analyze</b> it with AI or demo mode</li>
-      <li><b>Contribute</b> by following the roadmap</li>
+      <li><b>Follow</b> the roadmap and open your PR</li>
     </ol>
     <section class="card" aria-labelledby="form-h">
-      <h2 id="form-h">Analyze an issue</h2>
+      <h2 id="form-h">Paste your issue</h2>
       <div class="samples">
         <span>Try an example:</span>
         <span id="sample-buttons"></span>
