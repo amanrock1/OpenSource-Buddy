@@ -10,56 +10,100 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <header class="hero">
-    <div class="wrap">
-      <h1>OpenSource Buddy</h1>
-      <p>Paste a GitHub issue. Get a plain-English explanation, the skills involved, and a step-by-step plan for your first pull request.</p>
-      <p id="engine-status" class="status" role="status" data-state="">Checking AI engine…</p>
+  <header class="topbar">
+    <div class="bar">
+      <a class="brand" href="/" aria-label="OpenSource Buddy home">
+        <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="currentColor"/>
+          <g fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round">
+            <circle cx="11" cy="9" r="2.6"/><circle cx="11" cy="23" r="2.6"/><circle cx="22" cy="14" r="2.6"/>
+            <path d="M11 11.6v8.8M22 16.6c0 3.2-3 4-8.6 5"/>
+          </g>
+        </svg>
+        <span>OpenSource Buddy</span>
+      </a>
+      <div class="bar-right">
+        <p id="engine-status" class="status" role="status" data-state="">Checking AI engine…</p>
+        <a class="gh" href="https://github.com/amanrock1/OpenSource-Buddy" target="_blank" rel="noopener">GitHub</a>
+      </div>
     </div>
   </header>
 
-  <main class="wrap">
+  <section class="intro wrap">
+    <h1>Turn any GitHub issue into your first pull request.</h1>
+    <p>Paste an issue and get a plain-English explanation, the skills it needs, and a checklist to follow from fork to PR.</p>
     <ol class="how" aria-label="How it works">
-      <li><b>Paste</b> the issue’s title and description</li>
-      <li><b>Analyze</b> it with AI or demo mode</li>
-      <li><b>Follow</b> the roadmap and open your PR</li>
+      <li><b>Paste</b> the title and description</li>
+      <li><b>Analyze</b> with AI or demo mode</li>
+      <li><b>Follow</b> the checklist</li>
     </ol>
-    <section class="card" aria-labelledby="form-h">
-      <h2 id="form-h">Paste your issue</h2>
-      <div class="samples">
-        <span>Try an example:</span>
-        <span id="sample-buttons"></span>
-      </div>
-      <form id="issue-form" novalidate>
-        <label for="title">Issue title <span class="req">(required)</span></label>
-        <input id="title" name="title" type="text" maxlength="200" autocomplete="off">
+  </section>
 
-        <label for="description">Issue description <span class="req">(required)</span></label>
-        <textarea id="description" name="description" rows="8" maxlength="8000"></textarea>
-        <span id="desc-count" class="count" aria-hidden="true">0 / 8000</span>
-
-        <label for="url">GitHub issue URL <span class="opt">(optional, not fetched)</span></label>
-        <input id="url" name="url" type="url" placeholder="https://github.com/owner/repo/issues/123" autocomplete="off">
-
-        <label class="check">
-          <input id="demo-only" type="checkbox"> Use demo mode only (skip AI)
-        </label>
-
-        <p id="form-error" class="error" role="alert" hidden></p>
-        <div class="actions">
-          <button id="analyze-btn" type="submit" class="primary">Analyze Issue</button>
-          <button id="clear-btn" type="button" class="secondary">Clear</button>
+  <main class="layout wrap">
+    <div class="col-left">
+      <section class="card" aria-labelledby="form-h">
+        <h2 id="form-h">Your issue</h2>
+        <div class="samples">
+          <span>Try an example:</span>
+          <span id="sample-buttons"></span>
         </div>
-      </form>
-    </section>
+        <form id="issue-form" novalidate>
+          <label for="title">Issue title <span class="req">(required)</span></label>
+          <input id="title" name="title" type="text" maxlength="200" autocomplete="off">
 
-    <section id="results" aria-live="polite" hidden></section>
+          <label for="description">Issue description <span class="req">(required)</span></label>
+          <textarea id="description" name="description" rows="9" maxlength="8000"></textarea>
+          <span id="desc-count" class="count" aria-hidden="true">0 / 8000</span>
 
-    <section class="card" aria-labelledby="saved-h">
-      <h2 id="saved-h">Saved issues</h2>
-      <p id="saved-empty" class="muted">Nothing saved yet. Analyze an issue and press “Save”.</p>
-      <ul id="saved-list" class="saved"></ul>
-    </section>
+          <label for="url">GitHub issue URL <span class="opt">(optional, not fetched)</span></label>
+          <input id="url" name="url" type="url" placeholder="https://github.com/owner/repo/issues/123" autocomplete="off">
+
+          <label class="check">
+            <input id="demo-only" type="checkbox"> Use demo mode only (skip AI)
+          </label>
+
+          <p id="form-error" class="error" role="alert" hidden></p>
+          <div class="actions">
+            <button id="analyze-btn" type="submit" class="primary">Analyze Issue</button>
+            <button id="clear-btn" type="button" class="secondary">Clear</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="saved-h">
+        <h2 id="saved-h">Saved issues</h2>
+        <p id="saved-empty" class="muted">Nothing saved yet. Analyze an issue and press “Save”.</p>
+        <ul id="saved-list" class="saved"></ul>
+      </section>
+    </div>
+
+    <div class="col-right">
+      <section id="results" aria-live="polite" hidden></section>
+
+      <section id="placeholder" class="empty" aria-label="Preview of the results">
+        <svg viewBox="0 0 220 120" class="empty-art" aria-hidden="true">
+          <rect x="6" y="10" width="86" height="100" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="22" cy="28" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M34 28h44M18 52h62M18 66h54M18 80h40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M100 60h28m-8-8 8 8-8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="136" y="10" width="78" height="100" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+          <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="146" y="26" width="10" height="10" rx="2"/><path d="M148 31l2 2 4-5"/>
+            <path d="M164 31h40"/>
+            <rect x="146" y="50" width="10" height="10" rx="2"/><path d="M164 55h34"/>
+            <rect x="146" y="74" width="10" height="10" rx="2"/><path d="M164 79h38"/>
+          </g>
+        </svg>
+        <h2>Your plan will show up here</h2>
+        <p>Load an example or paste an issue, then press Analyze. You’ll get:</p>
+        <ul>
+          <li>An explanation in plain English</li>
+          <li>Skills and a difficulty estimate</li>
+          <li>A roadmap you can tick off step by step</li>
+          <li>Questions to check and a testing checklist</li>
+        </ul>
+      </section>
+    </div>
   </main>
 
   <footer class="wrap muted">
