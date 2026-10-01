@@ -176,7 +176,13 @@ The app does not download models and needs no API keys. Model output is validate
 
 ## Screenshots
 
-Add your own: run the app, capture the main page and a result, save them under `docs/` and reference them here, for example `![Main page](docs/main.png)`.
+**Main page**: paste an issue or load an example.
+
+![OpenSource Buddy main page](1.png)
+
+**AI analysis result**: explanation, skills, difficulty estimate and a numbered roadmap, with generated content clearly separated from your input.
+
+![OpenSource Buddy analysis result](2.png)
 
 ## Roadmap ideas
 
